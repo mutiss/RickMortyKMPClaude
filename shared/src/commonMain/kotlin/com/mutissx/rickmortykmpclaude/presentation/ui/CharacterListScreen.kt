@@ -277,7 +277,7 @@ private fun SearchTerminal(
         ) {
             if (query.isEmpty()) {
                 Text(
-                    text = "Search dimension...",
+                    text = "Search",
                     style = MaterialTheme.typography.bodyLarge,
                     color = OnSurfaceVariant.copy(alpha = 0.4f)
                 )
