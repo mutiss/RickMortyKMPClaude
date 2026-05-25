@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.mutissx.rickmortykmpclaude.presentation.ui.CharacterDetailScreen
 import com.mutissx.rickmortykmpclaude.presentation.ui.CharacterListScreen
+import com.mutissx.rickmortykmpclaude.presentation.ui.WelcomeDialog
 import com.mutissx.rickmortykmpclaude.presentation.ui.theme.AppTheme
 
 private data class SelectedCharacter(val id: Int, val name: String)
@@ -17,6 +18,7 @@ private data class SelectedCharacter(val id: Int, val name: String)
 @Composable
 fun App() {
     AppTheme {
+        var showWelcome by remember { mutableStateOf(true) }
         var selected by remember { mutableStateOf<SelectedCharacter?>(null) }
 
         BackHandlerEffect(enabled = selected != null) {
@@ -36,6 +38,10 @@ fun App() {
                     onBack = { selected = null }
                 )
             }
+        }
+
+        if (showWelcome) {
+            WelcomeDialog(onContinue = { showWelcome = false })
         }
     }
 }
