@@ -1,31 +1,154 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Rick & Morty — KMP Explorer
 
-* [/iosApp](./iosApp/iosApp) contains an iOS application. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
-
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
-
-### Running the apps
-
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
-
-- Android app: `./gradlew :androidApp:assembleDebug`
-- iOS app: open the [/iosApp](./iosApp) directory in Xcode and run it from there.
-
-### Running tests
-
-Use the run button in your IDE's editor gutter, or run tests using Gradle tasks:
-
-- Android tests: `./gradlew :shared:testAndroidHostTest`
-- iOS tests: `./gradlew :shared:iosSimulatorArm64Test`
+A **Kotlin Multiplatform** app targeting Android and iOS that lets you browse characters from the [Rick and Morty API](https://rickandmortyapi.com/). Built with Compose Multiplatform, it features a sci-fi "Dimension C-137" dark theme with portal-green accents.
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## Screenshots
+
+| Welcome | Character List | Character Detail |
+|:---:|:---:|:---:|
+| ![Welcome dialog](screenshots/screen_welcome.png) | ![Character list](screenshots/screen_list.png) | ![Character detail](screenshots/screen_detail.png) |
+
+---
+
+## Features
+
+- Browse all Rick & Morty characters with infinite scroll (Paging 3 + Room cache)
+- Search characters in real time with 300 ms debounce
+- Detail view with dimensional identity card, status badge, and episode history
+- Offline support — cached data shown with an offline banner
+- Welcome dialog on first launch
+
+---
+
+## Tech Stack
+
+| Layer | Libraries |
+|---|---|
+| UI | Compose Multiplatform (Material 3) |
+| Architecture | ViewModel + StateFlow (Koin DI) |
+| Networking | Ktor |
+| Persistence | Room + SQLDelight |
+| Paging | Jetpack Paging 3 |
+| Images | Coil 3 |
+| Build | Gradle 9 · KMP 2.x |
+
+---
+
+## Project Structure
+
+```
+RickMortyKMPClaude/
+├── androidApp/          Android entry point (MainActivity)
+├── iosApp/              iOS entry point (SwiftUI wrapper)
+└── shared/
+    └── src/
+        ├── commonMain/  Shared Kotlin — UI, domain, data, DI
+        ├── androidMain/ Android-specific expect implementations
+        └── iosMain/     iOS-specific expect implementations
+```
+
+**Package:** `com.mutissx.rickmortykmpclaude`
+
+```
+presentation/
+  ui/          Composable screens and components
+  viewmodel/   ViewModels
+domain/
+  model/       Data classes
+  repository/  Repository interfaces
+  usecase/     Business logic
+data/
+  remote/      Ktor API client
+  local/       Room database
+  paging/      Paging sources and mediators
+  repository/  Repository implementations
+di/            Koin modules
+```
+
+---
+
+## Running the App
+
+### Android
+
+```bash
+./gradlew :androidApp:assembleDebug
+# then install the APK, or run directly from Android Studio
+```
+
+### iOS
+
+Open `/iosApp` in Xcode and press **Run**.
+
+---
+
+## Claude Automated Task Pipeline
+
+This project uses a **Claude Code task pipeline** to implement features automatically from a one-line description.
+
+### How it works
+
+```
+User types:  execute-task TASKN <description>
+                    │
+                    ▼
+        ┌─────────────────────┐
+        │   execute-task      │  Creates feature branch from develop
+        │                     │  Generates implementation plan
+        └────────┬────────────┘
+                 │
+                 ▼
+        ┌─────────────────────┐
+        │ execute-task-approve│  Presents plan to user for approval
+        └────────┬────────────┘
+                 │  (user types "yes")
+                 ▼
+        ┌─────────────────────┐
+        │   android-expert    │  Implements the plan step by step
+        │                     │  Runs ktlint · builds the project
+        └────────┬────────────┘
+                 │
+                 ▼
+        ┌─────────────────────┐
+        │    pr-manager       │  Commits, pushes, opens GitHub PR
+        └─────────────────────┘
+```
+
+### Slash commands
+
+| Command | Role |
+|---|---|
+| `/execute-task TASKN <description>` | Kick off the pipeline — creates branch + plan |
+| `/execute-task-approve TASKN <description>` | Present plan for approval (auto-invoked) |
+| `/android-expert TASKN <description>` | Implement + build (auto-invoked after approval) |
+| `/pr-manager TASKN <description>` | Commit + push + open PR (auto-invoked after build) |
+
+### Example
+
+```
+/execute-task TASK7 Open a dialog at startup saying Welcome to Rick & Morty Project and a button Continue
+```
+
+The pipeline creates `feature/task-TASK7` from `develop`, writes the code, verifies the build, and opens a pull request — all without manual steps beyond approving the plan.
+
+---
+
+## Running Tests
+
+```bash
+# Android unit tests
+./gradlew :shared:testAndroidHostTest
+
+# iOS simulator tests
+./gradlew :shared:iosSimulatorArm64Test
+```
+
+---
+
+## Learn More
+
+- [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)
+- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
+- [Rick and Morty API](https://rickandmortyapi.com/)
