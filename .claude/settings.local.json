@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem *)",
+      "Bash(./gradlew :androidApp:assembleDebug --no-daemon)",
+      "Bash(curl -L -o sora_regular.ttf \"https://github.com/google/fonts/raw/main/ofl/sora/Sora-Regular.ttf\" --max-time 30 -w \"%{http_code}\")",
+      "Bash(curl -sL \"https://api.github.com/repos/google/fonts/contents/ofl/sora\")",
+      "Bash(curl -L -o sora_variable.ttf \"https://github.com/google/fonts/raw/main/ofl/sora/Sora%5Bwght%5D.ttf\" --max-time 30 -w \"\\\\nHTTP: %{http_code}\\\\n\")",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\Usuario\\\\Desktop\\\\Android\\\\cmptest\" -Force | Select-Object Name, @{Name=\"Type\"; Expression={if \\($_.PSIsContainer\\) { \"DIR\" } else { \"FILE\" }}} | Format-Table -AutoSize)"
+    ]
+  }
+}
