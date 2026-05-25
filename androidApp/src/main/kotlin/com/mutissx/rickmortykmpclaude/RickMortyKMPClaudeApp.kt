@@ -1,6 +1,7 @@
 ﻿package com.mutissx.rickmortykmpclaude
 
 import android.app.Application
+import android.widget.Toast
 import com.mutissx.rickmortykmpclaude.di.appModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,5 +16,6 @@ class RickMortyKMPClaudeApp : Application() {
             androidContext(this@RickMortyKMPClaudeApp)
             modules(appModules())
         }
+        Toast.makeText(this, getString(R.string.hello), Toast.LENGTH_SHORT).show()
     }
 }
