@@ -12,6 +12,12 @@ A **Kotlin Multiplatform** app targeting Android and iOS that lets you browse ch
 
 ---
 
+## Design
+
+The UI/UX design for this project was generated using **[Stitch](https://stitch.withgoogle.com/)**, Google's AI-powered design tool. Stitch translates natural-language prompts and visual references into production-ready design specs and component code, and was used to define the color palette, typography, component shapes, and overall "Dimension C-137" sci-fi aesthetic of the app.
+
+---
+
 ## Features
 
 - Browse all Rick & Morty characters with infinite scroll (Paging 3 + Room cache)
