@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.mutissx.rickmortykmpclaude.ShowCharacterToastEffect
 import com.mutissx.rickmortykmpclaude.domain.model.Character
 import com.mutissx.rickmortykmpclaude.domain.model.Episode
 import com.mutissx.rickmortykmpclaude.presentation.ui.theme.Background
@@ -81,6 +82,8 @@ fun CharacterDetailScreen(
         parameters = { parametersOf(characterId) }
     )
     val state by viewModel.state.collectAsState()
+
+    ShowCharacterToastEffect(characterName = characterName)
 
     Scaffold(
         topBar = {
